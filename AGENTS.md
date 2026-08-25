@@ -1,52 +1,125 @@
 # AGENTS.md
 
-## Objetivo
+## Purpose
 
-Este repositorio es la unidad mantenible de un producto o aplicación. GitHub es el sistema central para el código, Issues, Pull Requests, revisiones, automatización y estado técnico.
+This repository contains a technical project managed through GitHub Issues, Pull Requests, GitHub Projects, and automated QA.
 
-## Reglas de trabajo
+Agents must work within the scope defined by the GitHub Issue assigned to them and must not silently expand the scope.
 
-- Mantén los cambios pequeños y enfocados en el objetivo de la tarea.
-- Respeta las convenciones existentes antes de introducir nuevas abstracciones.
-- Añade o actualiza pruebas para cada cambio de comportamiento.
-- Actualiza la documentación cuando cambien interfaces, operación o decisiones de arquitectura.
-- No incluyas secretos, credenciales ni datos personales en el repositorio.
-- Ejecuta las comprobaciones relevantes antes de abrir un pull request.
-- No mezcles código corporativo, exportaciones DeltaV/FHX, topologías OT, nombres de servidores o proyectos personales.
-- No otorgues a agentes acceso directo a DeltaV, PLC, MES productivo o SQL/JDE productivo.
+## General principles
 
-## Flujo de trabajo
+- Prefer simple, maintainable solutions over unnecessary complexity.
+- Read the existing code and documentation before making changes.
+- Reuse existing patterns and components whenever possible.
+- Do not introduce breaking changes without explicitly documenting them.
+- Do not modify unrelated code.
+- Do not remove existing functionality unless the Issue explicitly requires it.
+- Never assume that production access or production execution is allowed.
+- Never commit credentials, secrets, tokens, passwords, certificates, or sensitive operational information.
 
-1. El agente `tech-pm` convierte una petición en una Issue con alcance, dependencias, riesgo, criterios de aceptación, pruebas, observabilidad, despliegue y rollback.
-2. La Issue permanece en `Proposed` hasta la aprobación humana; solo entonces pasa a `Ready`.
-3. El agente `implementer` trabaja en una rama, implementa, prueba y abre una Pull Request. No fusiona ni despliega.
-4. CI y el agente `qa` validan el cambio. La revisión humana es obligatoria antes del merge.
-5. Los despliegues a producción requieren un Environment protegido y aprobación humana independiente.
+## Before making changes
 
-Estados recomendados para el Project: `Inbox`, `Triage`, `Proposed`, `Ready`, `In Progress`, `In Review`, `QA`, `Blocked` y `Done`.
+The agent must:
 
-## Definition of Ready
+1. Read the assigned GitHub Issue completely.
+2. Inspect the relevant repository structure.
+3. Read applicable documentation.
+4. Identify dependencies and potential side effects.
+5. Determine how the requested change can be tested.
+6. Confirm that the implementation remains within the Issue scope.
 
-Una tarea no está lista para desarrollo hasta incluir problema, objetivo, alcance y fuera de alcance, criterios de aceptación verificables, dependencias, riesgo, plan de pruebas y estrategia de despliegue/rollback.
+If the requirements are ambiguous, document the assumption in the Pull Request rather than silently making a major design decision.
+
+## Implementation
+
+When implementing a task:
+
+- Create a dedicated branch.
+- Keep changes focused on the Issue.
+- Follow the repository's existing coding conventions.
+- Add or update automated tests whenever practical.
+- Update documentation when behavior or interfaces change.
+- Prefer incremental, reviewable changes.
+- Do not bypass validation because a change appears trivial.
+
+## Testing
+
+Before opening a Pull Request:
+
+- Run the project's documented build and test commands.
+- Run linting/static analysis where available.
+- Verify the acceptance criteria from the Issue.
+- Test relevant failure and edge cases.
+- Check that unrelated functionality has not regressed.
+
+If a test cannot be executed, explicitly state:
+
+- why it could not be executed;
+- what was tested instead;
+- what remains to be validated.
+
+Never claim a test passed when it was not actually executed.
+
+## Production and operational systems
+
+For changes affecting production systems, OT systems, databases, integrations, SCADA, MES, PLCs, infrastructure, or external services:
+
+- Do not execute production changes unless explicitly authorized.
+- Prefer test or staging environments.
+- Identify operational risks before implementation.
+- Provide a rollback procedure.
+- Document prerequisites and dependencies.
+- Clearly distinguish simulated/test validation from production validation.
+
+Agents must never infer production authorization from the existence of credentials or connectivity.
+
+## Pull Requests
+
+Every implementation Pull Request must contain:
+
+- Summary of the change.
+- Link to the GitHub Issue.
+- Technical approach.
+- Files/components affected.
+- Tests executed.
+- Test results.
+- Known limitations.
+- Risks and possible side effects.
+- Deployment considerations.
+- Rollback procedure when applicable.
 
 ## Definition of Done
 
-La PR está vinculada a la Issue, los checks pasan, QA y revisión humana están completados, la documentación y la evidencia de prueba están actualizadas, no hay secretos y el rollback está documentado cuando procede.
+A technical task is considered complete only when:
 
-## Restricciones de alto riesgo
+- Acceptance criteria are satisfied.
+- Automated tests and required checks pass.
+- Documentation is updated where necessary.
+- No secrets have been introduced.
+- The Pull Request is reviewable.
+- Required human approvals have been obtained.
+- Deployment/rollback considerations are documented when applicable.
 
-Cambios de credenciales, autenticación, SQL dinámico, archivos, APIs, red, firewall, despliegues, producción u OT requieren revisión de seguridad y aprobación humana. Las pruebas que necesiten red interna deben ejecutarse en un self-hosted runner aislado de producción, con mínimos privilegios.
+## Agent limitations
 
-## Estructura
+Agents must not:
 
-- `src/`: implementación.
-- `tests/`: pruebas automatizadas.
-- `docs/architecture.md`: arquitectura y límites del sistema.
-- `docs/runbook.md`: operación y respuesta a incidencias.
-- `docs/test-plan.md`: estrategia y alcance de pruebas.
-- `docs/adr/`: decisiones de arquitectura.
-- `.github/`: plantillas, instrucciones y automatización.
+- Merge their own Pull Requests unless explicitly authorized by repository policy.
+- Disable required CI checks to make a Pull Request pass.
+- Remove tests merely to obtain a passing pipeline.
+- Change security controls without explicit authorization.
+- Modify production systems without explicit authorization.
+- Expand the scope of an Issue without documenting it.
+- Hide failed tests, warnings, or known limitations.
 
-## Pull requests
+## Communication style
 
-Cada PR debe explicar el problema, el cambio realizado, cómo se validó y cualquier riesgo o trabajo pendiente.
+Use concise technical language.
+
+When reporting work, clearly separate:
+
+- Implemented
+- Tested
+- Not tested
+- Risks
+- Remaining work
