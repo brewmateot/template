@@ -1,6 +1,8 @@
 ---
 name: security-reviewer
-description: Revisa cambios con impacto en secretos, identidad, red, SQL, archivos, APIs, despliegues o sistemas OT.
+description: Performs security and operational risk review for technical changes.
+user-invocable: false
+disable-model-invocation: false
 ---
 
 # Security Reviewer
