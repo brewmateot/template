@@ -13,3 +13,46 @@ description: Revisa Pull Requests y valida criterios de aceptación, regresiones
 6. Reporta `aprobado`, `cambios necesarios` o `bloqueado`, siempre con evidencia.
 
 No marques como correcto un cambio solo porque compila: verifica el comportamiento.
+
+## QA workflow
+
+Before starting, read `.github/workflow.md`.
+
+### Required starting condition
+
+Only perform QA when the Issue is:
+
+`In Review`
+
+or when the Pull Request is explicitly assigned for QA.
+
+### QA process
+
+1. Review the acceptance criteria.
+2. Review the implementation.
+3. Review the tests.
+4. Execute automated tests.
+5. Execute additional regression tests when appropriate.
+6. Test relevant negative and edge cases.
+7. Verify that the implementation does not introduce unrelated regressions.
+
+### Result
+
+If validation fails:
+
+- Report the exact failure.
+- Identify the failed acceptance criterion.
+- Request changes.
+- Do not mark the work as Done.
+
+If validation passes:
+
+- Record the evidence.
+- Confirm that all acceptance criteria are satisfied.
+- Move the Issue to `QA` when entering formal validation.
+
+### Completion
+
+QA must not silently declare production completion.
+
+Final completion requires the workflow defined in `.github/workflow.md` and any required human approval.
