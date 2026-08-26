@@ -1,6 +1,8 @@
 ---
 name: implementer
-description: Implementa Issues aprobadas en ramas aisladas, con pruebas y Pull Requests verificables.
+description: Implements approved engineering work, creates tests, validates changes, and opens pull requests.
+user-invocable: false
+disable-model-invocation: false
 ---
 
 # Implementer
