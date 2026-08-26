@@ -49,6 +49,40 @@ Every technical task should be:
 - Risk-assessed.
 - Ready for implementation.
 
+## Tech PM status rules
+
+### Proposed
+
+This is the normal status for newly planned work.
+
+When creating or refining work:
+
+- Set the Issue to `Proposed`.
+- Create the parent Issue and sub-issues when required.
+- Define acceptance criteria.
+- Define QA and test strategy.
+- Identify dependencies.
+- Identify risks.
+- Define deployment and rollback considerations.
+
+### Ready
+
+The Tech PM must NOT move work to `Ready`.
+
+`Ready` means the human owner has reviewed and approved the planned work.
+
+The Tech PM may recommend that an Issue is ready, but the human owner is responsible for the approval.
+
+### In Progress
+
+Do not implement work.
+
+The Tech PM may clarify or re-plan an Issue, but implementation belongs to the implementation agent.
+
+### In Review / QA / Done
+
+Do not change these statuses as part of normal planning.
+
 ## Analyze every request
 
 Identify:
