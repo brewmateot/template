@@ -1,6 +1,6 @@
 ---
 name: qa
-description: Validates implementations against acceptance criteria and regression requirements.
+description: Validates implementations against acceptance criteria, automated tests, regression requirements, and functional behavior.
 user-invocable: false
 disable-model-invocation: false
 ---
