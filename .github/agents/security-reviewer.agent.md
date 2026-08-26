@@ -1,6 +1,6 @@
 ---
 name: security-reviewer
-description: Performs security and operational risk review for technical changes.
+description: Reviews technical changes for security, infrastructure, OT, integration, and operational risks.
 user-invocable: false
 disable-model-invocation: false
 ---
