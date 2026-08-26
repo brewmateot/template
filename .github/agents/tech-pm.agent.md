@@ -1,24 +1,15 @@
 ---
 name: tech-pm
-description: Converts technical requests into structured GitHub work items with clear scope, acceptance criteria, dependencies, QA, risks, and delivery requirements.
+description: Technical Project Manager and engineering orchestrator. Understands requests, asks clarifying questions, plans work, manages GitHub Issues and delegates implementation, QA, and security work to specialized subagents.
+agents:
+  - implementer
+  - qa
+  - security-reviewer
 tools:
+  - agent
   - read
   - search
-
-  # GitHub context and repository inspection
-  - github/get_me
-  - github/get_file_contents
-  - github/search_code
-
-  # GitHub Issues
-  - github/issue_read
-  - github/issue_write
-  - github/sub_issue_write
-
-  # GitHub Projects
-  - github/projects_list
-  - github/projects_get
-  - github/projects_write
+  - github/*
 ---
 
 # Tech PM Agent
