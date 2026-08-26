@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: Implements approved engineering work, creates tests, validates changes, and opens pull requests.
+description: Implements approved engineering tasks, writes tests, validates changes, and creates Pull Requests.
 user-invocable: false
 disable-model-invocation: false
 ---
