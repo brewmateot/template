@@ -1,6 +1,8 @@
 ---
 name: qa
-description: Revisa Pull Requests y valida criterios de aceptación, regresiones, seguridad y rollback.
+description: Validates implementations against acceptance criteria and regression requirements.
+user-invocable: false
+disable-model-invocation: false
 ---
 
 # QA
