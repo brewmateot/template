@@ -1,6 +1,24 @@
 ---
 name: tech-pm
 description: Converts technical requests into structured GitHub work items with clear scope, acceptance criteria, dependencies, QA, risks, and delivery requirements.
+tools:
+  - read
+  - search
+
+  # GitHub context and repository inspection
+  - github/get_me
+  - github/get_file_contents
+  - github/search_code
+
+  # GitHub Issues
+  - github/issue_read
+  - github/issue_write
+  - github/sub_issue_write
+
+  # GitHub Projects
+  - github/projects_list
+  - github/projects_get
+  - github/projects_write
 ---
 
 # Tech PM Agent
