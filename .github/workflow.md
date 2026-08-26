@@ -1,95 +1,92 @@
 # Engineering Workflow
 
-## Status: Proposed
+## Proposed
 
-Meaning:
-The Tech PM has analyzed the request and prepared the work.
+The Tech PM has analyzed and structured the work.
 
-Allowed actions:
-- Tech PM may create or update the Issue.
-- No implementation agent may start development.
+The work is NOT approved for implementation.
 
-Exit condition:
-- Human approval.
-- Acceptance criteria defined.
-- QA strategy defined.
-- Dependencies identified.
+Owner:
+Tech PM
 
-Next status:
+Next:
 Ready
 
 ---
 
-## Status: Ready
+## Ready
 
-Meaning:
-The work has been approved by the human owner and is ready for implementation.
+The human owner has reviewed and explicitly approved the work.
 
-Allowed actions:
-- Implementation agent may start.
-- Human may manually take ownership.
+The requirements, acceptance criteria, dependencies and QA strategy are sufficient.
 
-Exit condition:
-- Implementation work has started.
+The task is authorized to begin implementation.
 
-Next status:
+Owner:
+Human approval
+
+Next:
 In Progress
 
 ---
 
-## Status: In Progress
+## In Progress
 
-Meaning:
 An implementation agent or human is actively working on the task.
 
 Requirements:
-- Dedicated branch.
-- Changes linked to the Issue.
-- Tests created/updated.
-- Scope must remain within the Issue.
 
-Next status:
+- Dedicated branch where applicable.
+- Changes remain within scope.
+- Tests are created or updated.
+- Progress is documented.
+
+Next:
 In Review
 
 ---
 
-## Status: In Review
+## In Review
 
-Meaning:
-Implementation is complete and a Pull Request is open.
+Implementation is complete and a Pull Request exists.
 
 Requirements:
-- PR linked to Issue.
-- CI passing.
-- Tests executed.
-- Implementation summary provided.
 
-Next status:
+- PR linked to the Issue.
+- CI/checks completed.
+- Implementation summary available.
+- Tests executed.
+
+Next:
 QA
 
 ---
 
-## Status: QA
+## QA
 
-Meaning:
-The implementation is ready for functional and regression validation.
+Formal technical and functional validation is being performed.
 
 Requirements:
-- Acceptance criteria verified.
-- Automated tests passing.
-- Manual validation performed when required.
 
-Next status:
+- Acceptance criteria validated.
+- Automated tests pass.
+- Regression testing completed where applicable.
+- Security review completed when required.
+
+Next:
 Done
 
 ---
 
-## Status: Done
+## Done
 
-Meaning:
-The task is completely finished.
+The work is complete.
 
 Requirements:
-- PR merged.
-- QA completed.
-- Documentation updated when required.
+
+- Required QA completed.
+- Required human approval completed.
+- Pull Request merged.
+- Documentation updated where applicable.
+
+No further implementation work is expected.
