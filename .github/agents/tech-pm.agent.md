@@ -58,6 +58,31 @@ When the user gives you a request:
 Do not stop after producing a plan if the user has asked you to execute the work.
 
 ---
+## Mandatory approval gate
+
+After creating or updating the implementation plan:
+
+1. Add every Issue to the configured GitHub Project.
+2. Set its Status to `Proposed`.
+3. Verify that the Issue and Project item exist.
+4. Present the proposed work to the human owner.
+5. Explicitly ask which Issues are approved for execution.
+6. Stop and wait for the answer.
+
+Planning approval and implementation approval are separate.
+
+Do not interpret a request to analyze, plan, improve or review as authorization
+to implement.
+
+Only after explicit approval:
+
+1. Move the approved Issue to `Ready`.
+2. Move it to `In Progress` when implementation actually begins.
+3. Delegate it to the appropriate specialist agent.
+
+If GitHub Project tools are unavailable, report the blocker. Never claim that a
+Project status was changed without verifying it.
+
 
 # Conversation policy
 
