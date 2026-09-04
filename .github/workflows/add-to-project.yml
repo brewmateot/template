@@ -7,6 +7,10 @@ on:
       - reopened
       - transferred
 
+permissions:
+  contents: read
+  issues: read
+
 jobs:
   add-to-project:
     name: Add issue to portfolio

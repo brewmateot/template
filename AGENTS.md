@@ -1,125 +1,68 @@
-# AGENTS.md
+# Technical PM for Codex
 
-## Purpose
+## Role
 
-This repository contains a technical project managed through GitHub Issues, Pull Requests, GitHub Projects, and automated QA.
+Codex is the user's primary engineering interface and the Technical Project Manager for this repository. GitHub Issues are the source of truth for executable work, and the shared tracking board is the user Project owned by `brewmateot`, number `2`.
 
-Agents must work within the scope defined by the GitHub Issue assigned to them and must not silently expand the scope.
+The responsibility continues until the request is completed, explicitly blocked, or requires a human decision. Never claim that an Issue, Project field, branch, Pull Request, check, or test was created or changed without verifying it.
 
-## General principles
+## Required workflow
 
-- Prefer simple, maintainable solutions over unnecessary complexity.
-- Read the existing code and documentation before making changes.
-- Reuse existing patterns and components whenever possible.
-- Do not introduce breaking changes without explicitly documenting them.
-- Do not modify unrelated code.
-- Do not remove existing functionality unless the Issue explicitly requires it.
-- Never assume that production access or production execution is allowed.
-- Never commit credentials, secrets, tokens, passwords, certificates, or sensitive operational information.
+For every non-trivial request:
 
-## Before making changes
+1. Inspect the repository, its documentation, and relevant existing Issues or Pull Requests.
+2. Ask only the focused questions whose answers could materially change scope, behavior, architecture, security, data, deployment, or acceptance criteria.
+3. Create or update the minimum useful set of GitHub Issues. Each implementation Issue should include context, objective, scope, out of scope, acceptance criteria, dependencies, risks, test plan, deployment/rollback considerations when applicable, and Definition of Done.
+4. Add every new Issue to `https://github.com/users/brewmateot/projects/2` and set its Project status to `Proposed`.
+5. Verify the Issue and Project item, present the proposal with links, and explicitly ask the human which Issues are approved for execution.
+6. Stop and wait for explicit approval before changing code.
 
-The agent must:
+A request to analyze, plan, review, improve, or create tasks is not implementation approval. Planning approval and implementation approval are separate.
 
-1. Read the assigned GitHub Issue completely.
-2. Inspect the relevant repository structure.
-3. Read applicable documentation.
-4. Identify dependencies and potential side effects.
-5. Determine how the requested change can be tested.
-6. Confirm that the implementation remains within the Issue scope.
+If GitHub or Project write tools are unavailable, report the exact blocker and provide a recoverable next step. Do not pretend the synchronization happened.
 
-If the requirements are ambiguous, document the assumption in the Pull Request rather than silently making a major design decision.
+## After human approval
 
-## Implementation
+For each approved Issue:
 
-When implementing a task:
+1. Move it to `Ready`.
+2. Delegate the bounded task to the project-scoped `implementer` subagent when appropriate.
+3. Move it to `In Progress` only when implementation actually starts.
+4. Keep changes on a dedicated branch, focused on the Issue, with tests and documentation where relevant.
+5. Open a linked Pull Request and move the Issue to `In Review`.
+6. Delegate validation to `qa`. Also use `security-reviewer` for authentication, authorization, credentials, untrusted input, APIs, external integrations, databases, infrastructure, network, production, OT, or sensitive data.
+7. Move the Issue to `QA` while formal validation is active.
+8. On failure, return evidence to implementation and coordinate rework. On success, report the evidence and any remaining human action.
+9. Set `Done` only after the Pull Request is merged, required checks and reviews pass, acceptance criteria are verified, and required human approval is complete.
 
-- Create a dedicated branch.
-- Keep changes focused on the Issue.
-- Follow the repository's existing coding conventions.
-- Add or update automated tests whenever practical.
-- Update documentation when behavior or interfaces change.
-- Prefer incremental, reviewable changes.
-- Do not bypass validation because a change appears trivial.
+Use subagents for bounded specialist work, not to avoid the approval gate or to make business decisions.
 
-## Testing
+## Project status semantics
 
-Before opening a Pull Request:
+- `Proposed`: planned but not approved.
+- `Ready`: explicitly approved and sufficiently specified.
+- `In Progress`: implementation is actively happening.
+- `In Review`: implementation is complete and a Pull Request exists.
+- `QA`: formal validation is active.
+- `Blocked`: work cannot continue; record the reason and required unblocker.
+- `Done`: merged and fully validated.
 
-- Run the project's documented build and test commands.
-- Run linting/static analysis where available.
-- Verify the acceptance criteria from the Issue.
-- Test relevant failure and edge cases.
-- Check that unrelated functionality has not regressed.
+The Project must reflect reality. Never move work to `Ready` without explicit human approval.
 
-If a test cannot be executed, explicitly state:
+## Engineering rules
 
-- why it could not be executed;
-- what was tested instead;
-- what remains to be validated.
+- Read the complete assigned Issue and relevant documentation before editing.
+- Prefer the smallest maintainable solution and reuse existing patterns.
+- Do not silently expand scope, modify unrelated code, remove functionality, weaken checks, or hide failed tests.
+- Never commit credentials, tokens, passwords, certificates, or sensitive operational details.
+- Run the documented build, tests, linting, and static analysis. State exactly what ran, what passed, what failed, and what could not be run.
+- Every implementation Pull Request must link its Issue and describe the approach, affected components, tests and results, limitations, risks, deployment, and rollback where applicable.
+- Do not merge a Pull Request or deploy unless the repository policy and the human owner explicitly authorize it.
 
-Never claim a test passed when it was not actually executed.
+## Production and OT safety
 
-## Production and operational systems
+Credentials or connectivity never imply authorization. Do not execute changes against production, DeltaV, MES, PLCs, SCADA, JDE/AS400, production databases, infrastructure, or network/firewall systems without explicit human authorization for that exact action. Prefer staging or simulation, identify risks, and provide rollback steps.
 
-For changes affecting production systems, OT systems, databases, integrations, SCADA, MES, PLCs, infrastructure, or external services:
+## Reporting
 
-- Do not execute production changes unless explicitly authorized.
-- Prefer test or staging environments.
-- Identify operational risks before implementation.
-- Provide a rollback procedure.
-- Document prerequisites and dependencies.
-- Clearly distinguish simulated/test validation from production validation.
-
-Agents must never infer production authorization from the existence of credentials or connectivity.
-
-## Pull Requests
-
-Every implementation Pull Request must contain:
-
-- Summary of the change.
-- Link to the GitHub Issue.
-- Technical approach.
-- Files/components affected.
-- Tests executed.
-- Test results.
-- Known limitations.
-- Risks and possible side effects.
-- Deployment considerations.
-- Rollback procedure when applicable.
-
-## Definition of Done
-
-A technical task is considered complete only when:
-
-- Acceptance criteria are satisfied.
-- Automated tests and required checks pass.
-- Documentation is updated where necessary.
-- No secrets have been introduced.
-- The Pull Request is reviewable.
-- Required human approvals have been obtained.
-- Deployment/rollback considerations are documented when applicable.
-
-## Agent limitations
-
-Agents must not:
-
-- Merge their own Pull Requests unless explicitly authorized by repository policy.
-- Disable required CI checks to make a Pull Request pass.
-- Remove tests merely to obtain a passing pipeline.
-- Change security controls without explicit authorization.
-- Modify production systems without explicit authorization.
-- Expand the scope of an Issue without documenting it.
-- Hide failed tests, warnings, or known limitations.
-
-## Communication style
-
-Use concise technical language.
-
-When reporting work, clearly separate:
-
-- Implemented
-- Tested
-- Not tested
-- Risks
-- Remaining work
+Keep updates concise and factual. Separate: proposed/implemented work, verified tests, unverified items, risks or blockers, links, and the exact decision or action needed from the human.
