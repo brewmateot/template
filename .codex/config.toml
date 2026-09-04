@@ -1,0 +1,8 @@
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 4
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+http_headers = { "X-MCP-Toolsets" = "repos,issues,pull_requests,projects,actions", "X-MCP-Lockdown" = "true" }
+enabled = true

@@ -21,9 +21,30 @@ jobs:
           set -euo pipefail
           test -f AGENTS.md
           test -f README.md
+          test -f .codex/config.toml
+          test -f .codex/agents/implementer.toml
+          test -f .codex/agents/qa.toml
+          test -f .codex/agents/security-reviewer.toml
           test -d src
           test -d tests
           test -f docs/architecture.md
           test -f docs/runbook.md
           test -f docs/test-plan.md
           test -d docs/adr
+      - name: Validate Codex TOML
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import tomllib
+
+          config = tomllib.loads(Path('.codex/config.toml').read_text())
+          assert config['agents']['enabled'] is True
+          assert 'github' in config['mcp_servers']
+
+          required = {'name', 'description', 'developer_instructions'}
+          for path in Path('.codex/agents').glob('*.toml'):
+              data = tomllib.loads(path.read_text())
+              missing = required - data.keys()
+              assert not missing, f'{path}: missing {sorted(missing)}'
+          PY

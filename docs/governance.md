@@ -1,20 +1,16 @@
-# Gobierno de GitHub
+# Gobierno de GitHub y Codex
 
-Esta configuración se completa en la organización y no puede imponerse solo desde el repositorio.
+Parte de esta configuración vive fuera del repositorio y debe completarse en cada proyecto creado desde el template.
 
-## Organización y repositorios
+## GitHub Project compartido
 
-- Mantén el código corporativo en una organización privada aprobada; separa los proyectos personales.
-- Usa un repositorio por producto o conjunto mantenible, no uno por incidencia.
-- No subas exportaciones DeltaV/FHX, topologías OT, nombres de servidores, credenciales o cadenas de conexión.
-
-## GitHub Project
-
-Crea un Project de organización para el portfolio técnico con estados `Inbox`, `Triage`, `Proposed`, `Ready`, `In Progress`, `In Review`, `QA`, `Blocked` y `Done`.
+El PM técnico usa `https://github.com/users/brewmateot/projects/2` como tablero común. Debe tener los estados `Proposed`, `Ready`, `In Progress`, `In Review`, `QA`, `Blocked` y `Done`.
 
 Campos recomendados: `Type`, `Priority`, `Area`, `Risk`, `Size`, `Environment`, `Executor`, `Iteration` y `Target date`. Mantén vistas de triage, ejecución, roadmap, QA y alto riesgo/producción.
 
-La automatización de este repositorio permanece sin permisos de escritura hasta configurar el Project, una identidad de mínima autoridad y sus secretos en la organización.
+El workflow `add-to-project.yml` incorpora Issues abiertas, reabiertas o transferidas. En cada repositorio generado configura el secret `ADD_TO_PROJECT_PAT`: los templates no copian secrets. Concédele únicamente el acceso necesario para añadir Issues al Project; si el repositorio es privado, el token también necesita acceso a él.
+
+Codex usa el servidor MCP de GitHub definido en `.codex/config.toml` para crear Issues, comprobar el Project y actualizar estados. La primera sesión debe autenticarse y disponer de permisos de escritura sobre el repositorio y el Project.
 
 ## Ruleset de `main`
 
@@ -33,6 +29,8 @@ Configura un ruleset que exija:
 - Ejecuta pruebas internas en un self-hosted runner aislado, con cuenta de servicio de mínimos privilegios y sin acceso directo a producción.
 - No concedas a agentes permisos para descargar cambios a DeltaV, PLC, MES productivo o SQL/JDE productivo.
 
-## Integraciones
+## Datos y repositorios
 
-GitHub es la fuente de verdad técnica. Añade Jira solo si una exigencia corporativa lo requiere, manteniendo Jira para iniciativa/portfolio y GitHub para Issues, código, pruebas y PRs. Evita una sincronización bidireccional completa.
+- Mantén el código corporativo en una organización privada aprobada y separa proyectos personales.
+- No subas exportaciones DeltaV/FHX, topologías OT, nombres de servidores, credenciales o cadenas de conexión.
+- GitHub es la fuente de verdad técnica. Añade otra herramienta de portfolio solo cuando exista una necesidad clara y evita sincronizaciones bidireccionales innecesarias.
